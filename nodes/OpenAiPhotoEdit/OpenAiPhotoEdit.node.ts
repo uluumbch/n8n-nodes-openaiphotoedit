@@ -1,7 +1,3 @@
-/* eslint-disable */
-// @ts-nocheck
-import * as fs from 'fs';
-import * as path from 'path';
 import { Buffer } from 'buffer';
 import {
     // IDataObject,
@@ -17,7 +13,6 @@ import {
 
 import { OpenAiPhotoEditPrompt } from './OpenAiPhotoEditPrompt';
 import { writeDebugLog } from './logger';
-import { fstat } from 'fs';
 const { chibi, pixelart, cartoon } = OpenAiPhotoEditPrompt;
 
 export class OpenAiPhotoEdit implements INodeType {
