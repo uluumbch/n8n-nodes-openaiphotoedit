@@ -1,19 +1,19 @@
 {
-  "name": "n8n-nodes-<...>",
+  "name": "n8n-nodes-openaiphotoedit",
   "version": "0.1.0",
-  "description": "",
+  "description": "Simple node for n8n to edit images using OpenAI's Image model.",
   "keywords": [
     "n8n-community-node-package"
   ],
   "license": "MIT",
   "homepage": "",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Bachrul Uluum",
+    "email": "uluum123@gmail.com"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/<...>/n8n-nodes-<...>.git"
+    "url": "https://github.com/uluumbch/n8n-nodes-openaiphotoedit.git"
   },
   "engines": {
     "node": ">=20.15"
@@ -32,16 +32,13 @@
   ],
   "n8n": {
     "n8nNodesApiVersion": 1,
-    "credentials": [
-      "dist/credentials/ExampleCredentialsApi.credentials.js",
-      "dist/credentials/HttpBinApi.credentials.js"
-    ],
+    "credentials": [],
     "nodes": [
-      "dist/nodes/ExampleNode/ExampleNode.node.js",
-      "dist/nodes/HttpBin/HttpBin.node.js"
+      "dist/nodes/openAiPhotoEdit/openAiPhotoEdit.node.js"
     ]
   },
   "devDependencies": {
+    "@types/node": "^24.3.0",
     "@typescript-eslint/parser": "~8.32.0",
     "eslint": "^8.57.0",
     "eslint-plugin-n8n-nodes-base": "^1.16.3",
