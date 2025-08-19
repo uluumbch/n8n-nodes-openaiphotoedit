@@ -1,48 +1,79 @@
 ![Banner image](https://user-images.githubusercontent.com/10284570/173569848-c624317f-42b1-45a6-ab09-f0ea3c247648.png)
 
-# n8n-nodes-starter
+# n8n-nodes-openaiphotoedit
 
-This repo contains example nodes to help you get started building your own custom integrations for [n8n](https://n8n.io). It includes the node linter and other dependencies.
+OpenAI Photo Edit node for n8n, a powerful workflow automation tool.
+This node allows you to use OpenAI's [Image Generation](https://platform.openai.com/docs/guides/image-generation) to create a styled version of your photo.
 
-To make your custom node available to the community, you must create it as an npm package, and [submit it to the npm registry](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry).
+Avaliable options are:
+- **Chibi**: Generate a chibi-style image.
+- **Pixel Art**: Generate a pixel art-style image.
+- **Cartoon**: Generate a cartoon-style image.
 
-If you would like your node to be available on n8n cloud you can also [submit your node for verification](https://docs.n8n.io/integrations/creating-nodes/deploy/submit-community-nodes/).
+## Installation
+This node is intended for learning how to create custom nodes for n8n. To use it, you need to clone the repository and install the dependencies.
 
-## Prerequisites
-
-You need the following installed on your development machine:
-
-* [git](https://git-scm.com/downloads)
-* Node.js and npm. Minimum version Node 20. You can find instructions on how to install both using nvm (Node Version Manager) for Linux, Mac, and WSL [here](https://github.com/nvm-sh/nvm). For Windows users, refer to Microsoft's guide to [Install NodeJS on Windows](https://docs.microsoft.com/en-us/windows/dev-environment/javascript/nodejs-on-windows).
-* Install n8n with:
-  ```
-  npm install n8n -g
-  ```
-* Recommended: follow n8n's guide to [set up your development environment](https://docs.n8n.io/integrations/creating-nodes/build/node-development-environment/).
-
-## Using this starter
-
-These are the basic steps for working with the starter. For detailed guidance on creating and publishing nodes, refer to the [documentation](https://docs.n8n.io/integrations/creating-nodes/).
-
-1. [Generate a new repository](https://github.com/n8n-io/n8n-nodes-starter/generate) from this template repository.
-2. Clone your new repo:
+Although, you can use it in production following the steps below:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/uluumbch/n8n-nodes-openaiphotoedit.git
    ```
-   git clone https://github.com/<your organization>/<your-repo-name>.git
+2. Navigate to the cloned directory:
+   ```bash
+   cd n8n-nodes-openaiphotoedit
    ```
-3. Run `npm i` to install dependencies.
-4. Open the project in your editor.
-5. Browse the examples in `/nodes` and `/credentials`. Modify the examples, or replace them with your own nodes.
-6. Update the `package.json` to match your details.
-7. Run `npm run lint` to check for errors or `npm run lintfix` to automatically fix errors when possible.
-8. Test your node locally. Refer to [Run your node locally](https://docs.n8n.io/integrations/creating-nodes/test/run-node-locally/) for guidance.
-9. Replace this README with documentation for your node. Use the [README_TEMPLATE](README_TEMPLATE.md) to get started.
-10. Update the LICENSE file to use your details.
-11. [Publish](https://docs.npmjs.com/packages-and-modules/contributing-packages-to-the-registry) your package to npm.
+3. Install the dependencies:
+   ```bash
+   npm install
+   ```
+4. Build the project:
+   ```bash
+   npm run build
+   ```
+5. Use this docker compose as reference to run the node:
+   ```yaml
+    services:
+      caddy:
+        image: caddy:latest
+        restart: unless-stopped
+        ports:
+          - "80:80"
+          - "443:443"
+        volumes:
+          - caddy_data:/data
+          - ${DATA_FOLDER}/caddy_config:/config
+          - ${DATA_FOLDER}/caddy_config/Caddyfile:/etc/caddy/Caddyfile
 
-## More information
+      n8n:
+        image: docker.n8n.io/n8nio/n8n
+        restart: always
+        ports:
+          - 5678:5678
+        environment:
+          - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
+          - N8N_PORT=5678
+          - N8N_PROTOCOL=https
+          - NODE_ENV=production
+          - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
+          - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+          - N8N_CUSTOM_EXTENSIONS_DIR=/home/node/.n8n/custom
+        volumes:
+          - n8n_data:/home/node/.n8n
+          - ${DATA_FOLDER}/local_files:/files
+          - ${DATA_FOLDER}/n8n_custom_nodes:/home/node/.n8n/custom
+          
+    volumes:
+      caddy_data:
+        external: true
+      n8n_data:
+        external: true
+   ```
+6. Add the node to your n8n custom nodes directory:
+   ```bash
+   cp -r dist/* ${DATA_FOLDER}/n8n_custom_nodes/
+   ```
 
-Refer to our [documentation on creating nodes](https://docs.n8n.io/integrations/creating-nodes/) for detailed information on building your own nodes.
-
+> refer to the [n8n documentation](https://docs.n8n.io/hosting/installation/server-setups/digital-ocean) for more details on how to set up n8n deploymenyt using docker compose.
 ## License
 
-[MIT](https://github.com/n8n-io/n8n-nodes-starter/blob/master/LICENSE.md)
+[MIT](./LICENSE.md)
