@@ -10,6 +10,9 @@ Avaliable options are:
 - **Pixel Art**: Generate a pixel art-style image.
 - **Cartoon**: Generate a cartoon-style image.
 
+<img width="1920" height="879" alt="image" src="https://github.com/user-attachments/assets/928cd2ce-9bc1-4d43-8e3f-486ff2b83ff3" />
+
+
 ## Installation
 This node is intended for learning how to create custom nodes for n8n. To use it, you need to clone the repository and install the dependencies.
 
